@@ -4,13 +4,21 @@ import dotenv from "dotenv";
 import { connectDB } from './src/config/db.js';
 import eventRouter from "./src/routes/eventRoutes.js";
 import syncDatabase from './src/services/relation_table.js';
+import cors from "cors";
 
 dotenv.config()
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const corsOptions = {
+  origin: 'http://localhost:3001', 
+  methods: 'GET,POST',             
+  allowedHeaders: ['Content-Type', 'Authorization'], // Only allow these headers
+  credentials: true                 // Enable cookies over CORS
+};
 
 app.use(express.json());
+app.use(cors());
 
 app.use("/api/event", eventRouter);
 

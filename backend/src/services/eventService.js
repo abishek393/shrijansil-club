@@ -1,5 +1,6 @@
 import { fieldValidation } from "../utils/validation.js"
 import Event from "../models/evenetModel.js";
+import Category from "../models/categoryModels.js";
 
 
 export const regisetEvent = async (title, description, startDate, isPublish, note, imageURl) => {
@@ -48,7 +49,7 @@ export const updateEventService = async (id, title, description, note, ispublish
 }
 
 // getAll events service
-export const getAllEventService = async (limit = 10, offset = 0) => {
+export const getAllEventService = async (id, limit = 10, offset = 0) => {
   try {
     const events = await Event.findAll({
       limit,
@@ -56,10 +57,13 @@ export const getAllEventService = async (limit = 10, offset = 0) => {
       order: [["createdAt", "DESC"]]
     });
 
+    const category = await Category.findOne({EventId:id})
+
     const totalEvents = await Event.count();
     return {
       events,
-      totalEvents
+      totalEvents,
+      category
     };
   } catch (err) {
     console.error("Error in getAllEventService:", err.message);

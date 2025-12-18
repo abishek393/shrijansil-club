@@ -61,7 +61,7 @@ export const getAllEvent = async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const offset = (page - 1) * limit;
 
-    const { events, totalEvents } = await getAllEventService(limit, offset);
+    const { events, totalEvents } = await getAllEventService(id, limit, offset);
 
     if (events.length === 0) {
       return res.status(404).json({
@@ -69,13 +69,17 @@ export const getAllEvent = async (req, res) => {
       });
     }
 
-    return res.status(200).json({
-      message: "Events fetched successfully",
-      page,
-      limit,
-      totalEvents,
-      data: events
-    });
+  return res.status(200).json({
+  message: "Events fetched successfully",
+  page,
+  limit,
+  totalEvents,
+  data: events.map(event => ({
+    title: event.title,
+    imageURL: event.imageURL,
+    startDate: event.startDate
+  }))
+});
 
   } catch (err) {
     console.error("Get All Events Error:", err.message);

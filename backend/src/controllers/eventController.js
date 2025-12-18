@@ -60,8 +60,9 @@ export const getAllEvent = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 10;
     const offset = (page - 1) * limit;
+    const search = req.query.search || "";
 
-    const { events, totalEvents } = await getAllEventService(id, limit, offset);
+    const { events, totalEvents } = await getAllEventService( search, limit, offset);
 
     if (events.length === 0) {
       return res.status(404).json({

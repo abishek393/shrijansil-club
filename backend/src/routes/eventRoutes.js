@@ -8,4 +8,4 @@ router.post("/register", upload.single("image"), createEvent);
 router.patch("/update/:id", updateEvent);
 router.get("/getAll", getAllEvent);
 
-export default router;
+export default router

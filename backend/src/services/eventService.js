@@ -49,22 +49,28 @@ export const updateEventService = async (id, title, description, note, ispublish
 }
 
 // getAll events service
-export const getAllEventService = async (id, limit = 10, offset = 0) => {
+export const getAllEventService = async (search = "", limit = 10, offset = 0) => {
   try {
     const events = await Event.findAll({
+      where: {
+        title: {
+          [Op.like]: `%${search}%` // search by title
+        }
+      },
       limit,
       offset,
       order: [["createdAt", "DESC"]]
     });
 
-    const category = await Category.findOne({EventId:id})
+    const totalEvents = await Event.count({
+      where: {
+        title: {
+          [Op.like]: `%${search}%`
+        }
+      }
+    });
 
-    const totalEvents = await Event.count();
-    return {
-      events,
-      totalEvents,
-      category
-    };
+    return { events, totalEvents };
   } catch (err) {
     console.error("Error in getAllEventService:", err.message);
     throw err;

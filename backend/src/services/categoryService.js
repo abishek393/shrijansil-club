@@ -4,7 +4,7 @@ import { fieldValidation } from "../utils/validation.js";
 
 
 export const createCategoryService = async (eventId, title) => {
-    try { 
+    try {
         if (!fieldValidation(eventId, title)) {
             throw new err("please input all fields");
         }
@@ -18,35 +18,37 @@ export const createCategoryService = async (eventId, title) => {
 
 
     }
-    catch(err){
-        console.log("Create category err:". err.message)
+    catch (err) {
+        console.log("Create category err:".err.message)
         throw err;
     }
 
 };
 
 
-export const updateCategoryServices = async(id, title) =>{
-    try{
-        if(!fieldValidation(title)){
-            throw new Error("Please input all fields");
-        }
+export const updateCategoryServices = async (id, title, isActive) => {
+    try {
+       
 
         const category = await Category.findByPk(id);
-        
-        if(!category){
+
+        if (!category) {
             throw new Error("Category not found");
 
         }
 
-        category.title = title;
-        await category.save();
+        
+        await category.update({
+            title,
+            isActive
+        })
 
         return category;
 
     }
-    catch(err){
+    catch (err) {
         console.log("Somthing went wrong:", err.message);
         throw new Error(err)
     }
 }
+

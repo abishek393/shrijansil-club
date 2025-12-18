@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import { connectDB } from './src/config/db.js';
 import eventRouter from "./src/routes/eventRoutes.js";
 import syncDatabase from './src/services/relation_table.js';
+import playerRouter from "./src/routes/playerRoutes.js";
 import cors from "cors";
 
 dotenv.config()
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use("/api/event", eventRouter);
+app.use("/api/player", playerRouter);
 
 
 const startServer = async () => {

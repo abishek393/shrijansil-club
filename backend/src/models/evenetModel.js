@@ -2,36 +2,52 @@ import { DataTypes } from "sequelize";
 import { sequelize } from "../config/db.js";
 
 const Event = sequelize.define(
-    "Event", 
-    {
-        title:{
-            Type:DataTypes.STRING(250),
-            allownull: false,
-            index:true
-        },
-        description:{
-            Type:DataTypes.STRING(250),
-            allownull:false
-        },
-        startDate:{
-            Type:DataTypes.DATE,
-            allownull:false,
-            isDate: true,
-        },
-        isPublish:{
-            Type:DataTypes.BOOLEAN,
-            defaultValue: true
-        },
-        note:{
-            Type:DataTypes.STRING(250),
-            
-        },
-        isActive:{
-            Type:DataTypes.BOOLEAN,
-            defaultValue:true,
-            default:true
-        }
+  "Event",
+  {
+    title: {
+      type: DataTypes.STRING(250),
+      allowNull: false,
+    },
+
+    description: {
+      type: DataTypes.STRING(250),
+      allowNull: false,
+    },
+
+    startDate: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        isDate: true,
+      },
+    },
+
+    isPublish: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
+
+    note: {
+      type: DataTypes.STRING(250),
+      allowNull: true,
+    },
+
+    isActive: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+    },
+    imageURl:{
+        type:DataTypes.STRING
     }
-) 
+  },
+  {
+    indexes: [
+      {
+        fields: ["title"], // index on title
+      },
+    ],
+  }
+    
+);
 
 export default Event;

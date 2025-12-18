@@ -7,7 +7,7 @@ export const createEvent = async (req, res) => {
     const { title, description, startDate, isPublish, note } = req.body;
     
     try {
-        const result = await regisetEvent(title, description, startDate, isPublish, note, imageURl);
+        const result = await regisetEvent(categoryId, title, description, startDate, isPublish, note, imageURl);
         console.log(result);
          
         return res.status(200).json({message: "Successfully created new event", data: result});

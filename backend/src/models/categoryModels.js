@@ -4,8 +4,13 @@ import { DataTypes } from "sequelize";
 const Category = sequelize.define(
     "Category",
     {
-        title:{
-            type:DataTypes.STRING,
+        title: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        isActive:{
+            type:DataTypes.BOOLEAN,
+            defaultValue:true,
             allowNull:false
         }
     }
